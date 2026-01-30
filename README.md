@@ -1,33 +1,71 @@
-# press-spec-driven-development
-The Spec-Driven Development Book
+# Specification Driven Development: The Book
 
+A practical guide to Specification Driven Development (SDD) for professional developers working with AI coding agents.
 
-Research
+## What is this?
 
-https://www.infoq.com/articles/spec-driven-development/
+This repository contains the specifications, content, and build pipeline for a book about Specification Driven Development—a methodology where specifications become the primary artifact and code becomes a generated side effect.
 
-https://www.thoughtworks.com/insights/blog/agile-engineering-practices/spec-driven-development-unpacking-2025-new-engineering-practices
+The book is being written using SDD. The specifications in this repo drive the content generation.
 
-https://www.youtube.com/watch?v=q2KOAAtT-Qw&t=400s
+## Core Thesis
 
-https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/
+> The specification is the artifact. Code is a side effect.
 
-https://developer.microsoft.com/blog/spec-driven-development-spec-kit
+## Repository Structure
 
+```
+.
+├── specs/
+│   ├── editorial/          # What to write
+│   │   ├── book-brief.md
+│   │   ├── chapter-outline.md
+│   │   ├── writers-guide.md
+│   │   ├── glossary.md
+│   │   ├── prior-art.md
+│   │   ├── diataxis-integration.md
+│   │   └── continuity-tracker.md
+│   └── workflow/           # How to write it
+│       └── workflow.md
+├── content/                # Generated book content (coming)
+├── build/                  # EPUB and audio configuration (coming)
+├── validation/             # Content validation scripts (coming)
+└── output/                 # Generated artifacts (gitignored)
+```
 
-https://diataxis.fr/
+## Specifications
 
+| Document | Purpose |
+|----------|---------|
+| `book-brief.md` | Scope, thesis, audience, boundaries |
+| `chapter-outline.md` | 26 chapters across 5 parts |
+| `writers-guide.md` | Voice, tone, style rules |
+| `glossary.md` | 27 canonical term definitions |
+| `prior-art.md` | Related practices and positioning |
+| `diataxis-integration.md` | Content type framework (Tutorial/How-to/Reference/Explanation) |
+| `continuity-tracker.md` | Cross-reference and consistency tracking |
+| `workflow.md` | Authoring workflow and CI/CD pipeline |
 
+## Target Audience
 
-## prompt notes
+Professional developers (3+ years experience) who:
 
-| Document | Purpose | What It Contains |
-|----------|---------|------------------|
-| chapter-outline.md | Structure | Chapter/section list with one-line descriptions. The map of the book. |
-| chapter-briefs/ | Per-chapter scope | One file per chapter defining: goals, key concepts introduced, required examples, dependencies on prior chapters. |
-| glossary.md | Terminology canon | Authoritative definitions for all SDD terms. Single source of truth—agent references this, never invents definitions. |
-| examples-library.md | Reusable examples | Curated specifications, code snippets, scenarios the agent can draw from. Keeps examples consistent across chapters. |
-| anti-patterns.md | What to avoid | Catalog of common SDD mistakes with explanations. Gives agent concrete failure modes to discuss. |
-| author-voice.md | Your perspective | Your opinions, experiences, anecdotes, strong takes. Raw material only you can provide—agent weaves it in. |
-| prior-art.md | Positioning context | Brief notes on related concepts (TDD, BDD, domain-driven design, prompt engineering) and how SDD relates/differs. |
-| continuity-tracker.md | Cross-reference state | Running log of: concepts introduced (and where), examples used, forward/backward references. Prevents contradictions. |
+- Use AI coding tools but find ad-hoc prompting frustrating
+- Want systematic methods, not hacks
+- Value engineering discipline over "vibe coding"
+
+## Outputs
+
+- **EPUB** — Primary distribution format
+- **Audiobook** — Generated from markdown via ElevenLabs
+
+## Development
+
+```bash
+# Install pre-commit hooks
+pip install pre-commit
+pre-commit install
+
+# Run linting manually
+pre-commit run --all-files
+```
