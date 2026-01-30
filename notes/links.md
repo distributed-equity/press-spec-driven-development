@@ -28,3 +28,5 @@ https://diataxis.fr/
 | author-voice.md | Your perspective | Your opinions, experiences, anecdotes, strong takes. Raw material only you can provide—agent weaves it in. |
 | prior-art.md | Positioning context | Brief notes on related concepts (TDD, BDD, domain-driven design, prompt engineering) and how SDD relates/differs. |
 | continuity-tracker.md | Cross-reference state | Running log of: concepts introduced (and where), examples used, forward/backward references. Prevents contradictions. |
+
+book cover generator https://www.genspark.ai

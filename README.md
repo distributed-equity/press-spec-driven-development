@@ -1,18 +1,20 @@
-# Specification Driven Development: The Book
+# Spec Driven Development: The Book
+
+## Code is a Side Effect
 
 A practical guide to Specification Driven Development (SDD) for professional developers working with AI coding agents.
 
-## What is this?
+### What is this?
 
 This repository contains the specifications, content, and build pipeline for a book about Specification Driven Development—a methodology where specifications become the primary artifact and code becomes a generated side effect.
 
 The book is being written using SDD. The specifications in this repo drive the content generation.
 
-## Core Thesis
+### Core Thesis
 
 > The specification is the artifact. Code is a side effect.
 
-## Repository Structure
+### Repository Structure
 
 ```
 .
@@ -33,7 +35,7 @@ The book is being written using SDD. The specifications in this repo drive the c
 └── output/                 # Generated artifacts (gitignored)
 ```
 
-## Specifications
+### Specifications
 
 | Document | Purpose |
 |----------|---------|
@@ -46,7 +48,7 @@ The book is being written using SDD. The specifications in this repo drive the c
 | `continuity-tracker.md` | Cross-reference and consistency tracking |
 | `workflow.md` | Authoring workflow and CI/CD pipeline |
 
-## Target Audience
+### Target Audience
 
 Professional developers (3+ years experience) who:
 
@@ -54,12 +56,12 @@ Professional developers (3+ years experience) who:
 - Want systematic methods, not hacks
 - Value engineering discipline over "vibe coding"
 
-## Outputs
+### Outputs
 
 - **EPUB** — Primary distribution format
 - **Audiobook** — Generated from markdown via ElevenLabs
 
-## Development
+### Development
 
 ```bash
 # Install pre-commit hooks
@@ -70,7 +72,7 @@ pre-commit install
 pre-commit run --all-files
 ```
 
-## License
+### License
 
 This repository uses split licensing:
 
