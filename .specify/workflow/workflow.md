@@ -285,30 +285,51 @@ Create one brief per chapter before generation.
 ## Purpose
 [One sentence: why this chapter exists]
 
+## Diátaxis Classification
+
+**Primary type:** [Tutorial / How-to / Reference / Explanation]
+**Secondary type:** [If applicable, or "None"]
+
+**Content balance:**
+- Tutorial elements: [What reader will do/build, or "None"]
+- How-to elements: [What tasks are addressed, or "None"]
+- Reference elements: [What can be looked up, or "None"]
+- Explanation elements: [What is explained/contextualized]
+
 ## Reader State
 - **Entering:** [What reader knows/feels coming in]
-- **Exiting:** [What reader knows/feels leaving]
+- **Exiting:** [What reader knows/can do leaving]
 
 ## Key Concepts
-| Concept | Action |
-|---------|--------|
-| [Term] | Introduce / Reinforce / Reference |
+| Concept | Action | Diátaxis Type |
+|---------|--------|---------------|
+| [Term] | Introduce / Reinforce / Reference | [T/H/R/E] |
 
 ## Required Content
 - [ ] [Specific point that must be covered]
 - [ ] [Specific point that must be covered]
 
 ## Required Examples
-| Example | Type | Description |
-|---------|------|-------------|
-| [Name] | [Code/Spec/Workflow/Diagram] | [What it shows] |
+| Example | Type | Diátaxis | Description |
+|---------|------|----------|-------------|
+| [Name] | [Code/Spec/Workflow/Diagram] | [T/H/R/E] | [What it shows] |
 
 ## Constraints
 - Word count: [Target range]
 - Dependencies: [Chapters that must be read first]
 - Forbidden: [Topics/terms to avoid in this chapter]
 
+## Cross-Type Links
+| For... | Link to |
+|--------|---------|
+| Deeper explanation | [Chapter/Section] |
+| Step-by-step tutorial | [Chapter/Section] |
+| Reference lookup | [Appendix/Section] |
+| Practical how-to | [Chapter/Section] |
+
 ## Acceptance Criteria
+- [ ] Primary Diátaxis type maintained throughout
+- [ ] No type mixing within sections
 - [ ] [Testable criterion]
 - [ ] [Testable criterion]
 - [ ] All terms from glossary used correctly

@@ -113,6 +113,49 @@ When introducing SDD-specific concepts, define them on first use.
 
 ---
 
+## Diátaxis Content Types
+
+Every section has a primary Diátaxis type. Do not mix types within a section.
+
+| Type | Purpose | Voice | Structure |
+|------|---------|-------|-----------|
+| Tutorial | Teach by doing | "Let's build... First, create..." | Step-by-step with visible progress |
+| How-to | Help accomplish goal | "To achieve X, do Y" | Goal → Prerequisites → Directions → Confirm |
+| Reference | Provide facts for lookup | Neutral, factual | Tables, lists, consistent format |
+| Explanation | Build understanding | "The reason for X is..." | Discursive, connects ideas |
+
+**Writing rules by type:**
+
+**Tutorial:**
+- Reader does something at each step
+- Instructor responsible for success
+- Minimize explanation (link instead)
+- No decision points—guide completely
+
+**How-to:**
+- Assume reader is competent
+- Focus on goal, not learning
+- May include decision points
+- Practical, not theoretical
+
+**Reference:**
+- Structured for lookup, not reading
+- Consistent format across entries
+- Complete, accurate, austere
+- No opinions or interpretation
+
+**Explanation:**
+- Serve understanding, not action
+- Can be opinionated
+- Connect to broader context
+- No steps to follow
+
+**Default rule:** If unsure which type, it's probably Explanation. Check if it should be one of the other three.
+
+For full Diátaxis guidelines, see `diataxis-integration.md`.
+
+---
+
 ## Examples
 
 Examples are required, not optional. Every abstract concept needs a concrete illustration.

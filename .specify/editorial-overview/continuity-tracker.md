@@ -160,6 +160,8 @@ Track all project documents and their relationships.
 | chapter-outline.md | Book structure, 26 chapters | Complete (v1) | Current session |
 | glossary.md | Terminology canon, 27 terms | Complete (v1) | Current session |
 | prior-art.md | Related practices, positioning | Complete (v1) | Current session |
+| diataxis-integration.md | Content type framework | Complete (v1) | Current session |
+| sdd-workflow.md | Authoring workflow, CI/CD | Complete (v1) | Current session |
 | continuity-tracker.md | Cross-reference state | Active | Current session |
 | author-voice.md | Author perspective, opinions | Not started | — |
 | examples-library.md | Reusable examples | Not started | — |
