@@ -1,20 +1,18 @@
-# Spec Driven Development: The Book
-
-## Code is a Side Effect
+# Specification Driven Development: The Book
 
 A practical guide to Specification Driven Development (SDD) for professional developers working with AI coding agents.
 
-### What is this?
+## What is this?
 
 This repository contains the specifications, content, and build pipeline for a book about Specification Driven Development—a methodology where specifications become the primary artifact and code becomes a generated side effect.
 
 The book is being written using SDD. The specifications in this repo drive the content generation.
 
-### Core Thesis
+## Core Thesis
 
 > The specification is the artifact. Code is a side effect.
 
-### Repository Structure
+## Repository Structure
 
 ```
 .
@@ -35,7 +33,7 @@ The book is being written using SDD. The specifications in this repo drive the c
 └── output/                 # Generated artifacts (gitignored)
 ```
 
-### Specifications
+## Specifications
 
 | Document | Purpose |
 |----------|---------|
@@ -48,7 +46,7 @@ The book is being written using SDD. The specifications in this repo drive the c
 | `continuity-tracker.md` | Cross-reference and consistency tracking |
 | `workflow.md` | Authoring workflow and CI/CD pipeline |
 
-### Target Audience
+## Target Audience
 
 Professional developers (3+ years experience) who:
 
@@ -56,23 +54,49 @@ Professional developers (3+ years experience) who:
 - Want systematic methods, not hacks
 - Value engineering discipline over "vibe coding"
 
-### Outputs
+## Outputs
 
 - **EPUB** — Primary distribution format
 - **Audiobook** — Generated from markdown via ElevenLabs
 
-### Development
+## Development
 
 ```bash
+# Install Python dependencies
+pip install -r requirements.txt
+
 # Install pre-commit hooks
-pip install pre-commit
 pre-commit install
 
 # Run linting manually
 pre-commit run --all-files
 ```
 
-### License
+## Build
+
+Requires [pandoc](https://pandoc.org/installing.html) for EPUB generation.
+
+```bash
+# macOS
+brew install pandoc
+
+# Ubuntu/Debian (via .deb - apt version is often outdated)
+wget https://github.com/jgm/pandoc/releases/download/3.6.4/pandoc-3.6.4-1-amd64.deb
+sudo dpkg -i pandoc-3.6.4-1-amd64.deb
+
+# Windows
+choco install pandoc
+```
+
+Build the EPUB:
+
+```bash
+python build.py
+```
+
+Output: `output/spec-driven-development.epub`
+
+## License
 
 This repository uses split licensing:
 

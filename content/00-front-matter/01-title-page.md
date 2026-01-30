@@ -1,9 +1,13 @@
-# Spec Driven Development
+::: {.title-page .unnumbered .unlisted}
 
-## Code is a Side Effect
+**Spec Driven Development**
 
-By Kevin Ryan
+*Code is a Side Effect*
+
+Kevin Ryan
 
 ---
 
-Move beyond ad-hoc prompting to structured workflows where the spec is the source of truth and code follows.
+*Move beyond ad-hoc prompting to structured workflows where the spec is the source of truth and code follows.*
+
+:::
