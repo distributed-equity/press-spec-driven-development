@@ -62,7 +62,7 @@ sdd-book/
 ├── content/                            # Artifact layer (generated)
 │   │
 │   ├── 00-front-matter/                # Front matter (ordered first)
-│   │   ├── 00-cover.md                 # Title, subtitle, author
+│   │   ├── 00-cover.png                # Title, subtitle, author
 │   │   ├── 01-title-page.md            # Full title page
 │   │   ├── 02-copyright.md             # Copyright, edition, ISBN
 │   │   ├── 03-dedication.md            # Optional
