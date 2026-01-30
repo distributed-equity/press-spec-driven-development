@@ -72,6 +72,13 @@ pre-commit run --all-files
 
 ## License
 
-This work is licensed under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+This repository uses split licensing:
 
-You are free to share this material with attribution. You may not use it commercially or create derivative works.
+| Content | License |
+|---------|---------|
+| Book content, specifications, prose (`specs/`, `content/`) | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) |
+| Code, scripts, build tooling (`scripts/`, `validation/`, config files) | [MIT](LICENSE-MIT) |
+
+**Book content:** Free to share with attribution. No commercial use or derivatives.
+
+**Code:** Do whatever you want with attribution.
