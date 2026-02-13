@@ -2,7 +2,7 @@
 """
 SDD Book EPUB Build Script
 
-Usage: python build.py
+Usage: python scripts/build-epub.py
 
 Assembles front matter, parts, chapters, and back matter into EPUB using pandoc.
 Scans content/ directory structure and includes files in order.
@@ -10,6 +10,7 @@ Missing content is skipped gracefully.
 
 Dependencies:
   - pandoc
+  - Run scripts/build-cover.py first to generate cover image
 """
 
 import re
@@ -19,12 +20,13 @@ from pathlib import Path
 
 # === CONFIGURATION ===
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
 BOOK_TITLE = "spec-driven-development"
-CONTENT_DIR = Path("content")
-COVER_IMAGE = CONTENT_DIR / "00-front-matter/00-cover.png"
-METADATA_FILE = Path("build/epub/metadata.yaml")
-CSS_FILE = Path("build/epub/styles.css")
-OUTPUT_DIR = Path("output")
+CONTENT_DIR = REPO_ROOT / "content"
+COVER_IMAGE = REPO_ROOT / "output" / "cover.png"
+METADATA_FILE = REPO_ROOT / "build" / "epub" / "metadata.yaml"
+CSS_FILE = REPO_ROOT / "build" / "epub" / "styles.css"
+OUTPUT_DIR = REPO_ROOT / "output"
 OUTPUT_EPUB = OUTPUT_DIR / f"{BOOK_TITLE}.epub"
 
 # Directory order (matches book structure)
@@ -78,16 +80,24 @@ def scan_content() -> list[Path]:
     return all_files
 
 
-def ensure_output_dir():
-    """Create output directory if needed."""
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+def check_deps():
+    """Verify pandoc is available."""
+    try:
+        subprocess.run(
+            ["pandoc", "--version"],
+            capture_output=True,
+            check=True,
+        )
+    except FileNotFoundError:
+        print("Error: pandoc not found. Install with: sudo apt-get install pandoc")
+        sys.exit(1)
 
 
 def build_epub():
     """Assemble and build the EPUB."""
     print(f"Building {OUTPUT_EPUB}...\n")
 
-    ensure_output_dir()
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # Check for cover image
     cover_flag = []
@@ -95,18 +105,7 @@ def build_epub():
         cover_flag = [f"--epub-cover-image={COVER_IMAGE}"]
         print(f"Cover: {COVER_IMAGE}")
     else:
-        # Try alternate locations
-        alt_covers = [
-            CONTENT_DIR / "00-front-matter/cover.png",
-            Path("build/epub/cover.png"),
-        ]
-        for alt in alt_covers:
-            if alt.exists():
-                cover_flag = [f"--epub-cover-image={alt}"]
-                print(f"Cover: {alt}")
-                break
-        if not cover_flag:
-            print("Cover: (none found, continuing without)")
+        print("Cover: (none found, run scripts/build-cover.py first)")
 
     # Check for metadata
     metadata_flag = []
@@ -165,4 +164,5 @@ def build_epub():
 
 
 if __name__ == "__main__":
+    check_deps()
     build_epub()
