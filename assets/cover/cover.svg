@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 1500" width="1050" height="1500">
+  <!-- Background -->
+  <rect width="1050" height="1500" fill="#ffffff"/>
+
+  <!-- Vertical dark line (left spine accent) -->
+  <line x1="108" y1="0" x2="108" y2="1500" stroke="#2d2d2d" stroke-width="4"/>
+
+  <!-- Horizontal red line -->
+  <line x1="0" y1="780" x2="1050" y2="780" stroke="#e63926" stroke-width="3"/>
+
+  <!-- Main title: Archivo Black -->
+  <text x="140" y="260" font-family="'Archivo Black', sans-serif" font-weight="400" font-size="148" fill="#1a1a1a">Spec</text>
+  <text x="140" y="420" font-family="'Archivo Black', sans-serif" font-weight="400" font-size="148" fill="#1a1a1a">Driven</text>
+  <text x="140" y="575" font-family="'Archivo Black', sans-serif" font-weight="400" font-size="112" fill="#1a1a1a">Development</text>
+
+  <!-- Subtitle: Inter Regular -->
+  <text x="140" y="875" font-family="'Inter', sans-serif" font-weight="400" font-size="52" fill="#1a1a1a">Code is a Side Effect</text>
+
+  <!-- Author: Inter Regular -->
+  <text x="140" y="945" font-family="'Inter', sans-serif" font-weight="400" font-size="32" fill="#555555">Kevin Ryan</text>
+
+  <!-- Tagline: Inter Regular -->
+  <text x="525" y="1370" font-family="'Inter', sans-serif" font-weight="400" font-size="24" fill="#444444" text-anchor="middle">Move beyond ad-hoc prompting to structured workflows</text>
+  <text x="525" y="1402" font-family="'Inter', sans-serif" font-weight="400" font-size="24" fill="#444444" text-anchor="middle">where the spec is the source of truth and code follows.</text>
+</svg>
