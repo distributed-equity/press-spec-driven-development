@@ -1,4 +1,4 @@
-name: Build Book
+name: Build & Deploy Book
 
 on:
   push:
@@ -35,3 +35,20 @@ jobs:
             output/front-cover.png
             output/spine.png
             output/back-cover.png
+
+      - name: Azure Login
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Blob Storage
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          az storage blob upload \
+            --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+            --container-name downloads \
+            --name spec-driven-development.epub \
+            --file output/spec-driven-development.epub \
+            --overwrite \
+            --auth-mode login
