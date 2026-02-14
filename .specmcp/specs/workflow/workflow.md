@@ -44,20 +44,23 @@ This document defines the specification-driven workflow for writing, validating,
 
 ```
 sdd-book/
-├── specs/                              # Specification layer
-│   ├── book-brief.md
-│   ├── writers-guide.md
-│   ├── chapter-outline.md
-│   ├── glossary.md
-│   ├── prior-art.md
-│   ├── continuity-tracker.md
-│   ├── author-voice.md
-│   ├── examples-library.md
-│   ├── anti-patterns.md
-│   └── chapter-briefs/
-│       ├── ch01-brief.md
-│       ├── ch02-brief.md
-│       └── ...
+├── .specmcp/                           # Specification layer + MCP server
+│   ├── server.py                       # MCP server for spec delivery
+│   ├── requirements.txt                # MCP server dependencies
+│   └── specs/
+│       ├── editorial/
+│       │   ├── book-brief.md
+│       │   ├── writers-guide.md
+│       │   ├── chapter-outline.md
+│       │   ├── glossary.md
+│       │   ├── prior-art.md
+│       │   ├── continuity-tracker.md
+│       │   └── chapter-briefs/
+│       │       ├── ch01-brief.md
+│       │       ├── ch02-brief.md
+│       │       └── ...
+│       └── workflow/
+│           └── workflow.md
 │
 ├── content/                            # Artifact layer (generated)
 │   │
@@ -572,7 +575,7 @@ on:
   pull_request:
     paths:
       - 'content/**'
-      - 'specs/**'
+      - '.specmcp/specs/**'
 
 jobs:
   validate:
