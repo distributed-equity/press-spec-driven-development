@@ -98,7 +98,8 @@ def build_epub(git_hash: str | None = None, build_date: str | None = None):
         "--toc-depth=2",
         "--epub-chapter-level=1",
         "--epub-title-page=false",
-        "-o", str(output_file),
+        "-o",
+        str(output_file),
     ]
 
     if METADATA_FILE.exists():

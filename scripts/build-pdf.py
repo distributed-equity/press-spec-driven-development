@@ -219,7 +219,8 @@ def build_pdf(variant: str, git_hash: str | None, build_date: str | None):
         str(assembled_path),
         "--pdf-engine=xelatex",
         "--top-level-division=chapter",
-        "-o", str(output_file),
+        "-o",
+        str(output_file),
     ]
 
     if TEMPLATE_FILE.exists():
@@ -228,23 +229,27 @@ def build_pdf(variant: str, git_hash: str | None, build_date: str | None):
         cmd.append(f"--metadata-file={METADATA_FILE}")
 
     # Fonts
-    cmd.extend([
-        f"--variable=mainfont:{MAIN_FONT}",
-        f"--variable=sansfont:{SANS_FONT}",
-        f"--variable=monofont:{MONO_FONT}",
-        f"--variable=slabfont:{SLAB_FONT}",
-        f"--variable=fontsize:{FONT_SIZE}",
-    ])
+    cmd.extend(
+        [
+            f"--variable=mainfont:{MAIN_FONT}",
+            f"--variable=sansfont:{SANS_FONT}",
+            f"--variable=monofont:{MONO_FONT}",
+            f"--variable=slabfont:{SLAB_FONT}",
+            f"--variable=fontsize:{FONT_SIZE}",
+        ]
+    )
 
     # Variant
     if is_print:
         cmd.append("--variable=print:true")
     else:
         if COVER_IMAGE.exists():
-            cmd.extend([
-                "--variable=include-cover:true",
-                f"--variable=cover-image:{COVER_IMAGE}",
-            ])
+            cmd.extend(
+                [
+                    "--variable=include-cover:true",
+                    f"--variable=cover-image:{COVER_IMAGE}",
+                ]
+            )
 
     # Build info
     if git_hash:

@@ -37,11 +37,18 @@ def upload(storage_account: str, container: str):
         print(f"  Uploading {filename} ({size_kb:.1f} KB)...")
         subprocess.run(
             [
-                "az", "storage", "blob", "upload",
-                "--account-name", storage_account,
-                "--container-name", container,
-                "--name", filename,
-                "--file", str(filepath),
+                "az",
+                "storage",
+                "blob",
+                "upload",
+                "--account-name",
+                storage_account,
+                "--container-name",
+                container,
+                "--name",
+                filename,
+                "--file",
+                str(filepath),
                 "--overwrite",
             ],
             check=True,
