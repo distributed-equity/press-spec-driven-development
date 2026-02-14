@@ -8,20 +8,17 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = REPO_ROOT / "output"
 
-# Files to upload
 ARTIFACTS = [
     "spec-driven-development.epub",
+    "spec-driven-development.pdf",
+    "spec-driven-development-print.pdf",
 ]
 
 
 def check_deps():
     """Verify az CLI is available."""
     try:
-        subprocess.run(
-            ["az", "version"],
-            capture_output=True,
-            check=True,
-        )
+        subprocess.run(["az", "version"], capture_output=True, check=True)
     except FileNotFoundError:
         print("Error: az CLI not found.")
         sys.exit(1)
@@ -29,48 +26,42 @@ def check_deps():
 
 def upload(storage_account: str, container: str):
     """Upload artifacts to blob storage."""
+    uploaded = 0
     for filename in ARTIFACTS:
         filepath = OUTPUT_DIR / filename
         if not filepath.exists():
-            print(f"  Skipping {filename} (not found)")
+            print(f"  Skip {filename} (not found)")
             continue
 
-        print(f"  Uploading {filename}...")
+        size_kb = filepath.stat().st_size / 1024
+        print(f"  Uploading {filename} ({size_kb:.1f} KB)...")
         subprocess.run(
             [
-                "az",
-                "storage",
-                "blob",
-                "upload",
-                "--account-name",
-                storage_account,
-                "--container-name",
-                container,
-                "--name",
-                filename,
-                "--file",
-                str(filepath),
+                "az", "storage", "blob", "upload",
+                "--account-name", storage_account,
+                "--container-name", container,
+                "--name", filename,
+                "--file", str(filepath),
                 "--overwrite",
             ],
             check=True,
         )
+        uploaded += 1
 
-    print("\nFiles available at:")
-    print(f"  https://{storage_account}.blob.core.windows.net/{container}/")
+    print(f"\n{uploaded}/{len(ARTIFACTS)} uploaded.")
+    print(f"https://{storage_account}.blob.core.windows.net/{container}/")
 
 
 def main():
     if len(sys.argv) < 2:
-        print(f"Usage: {sys.argv[0]} <storage-account-name> [container]")
+        print(f"Usage: {sys.argv[0]} <storage-account> [container]")
         sys.exit(1)
 
     storage_account = sys.argv[1]
     container = sys.argv[2] if len(sys.argv) > 2 else "downloads"
 
     print(f"Uploading to {storage_account}/{container}...\n")
-
     upload(storage_account, container)
-    print("\nDone.")
 
 
 if __name__ == "__main__":

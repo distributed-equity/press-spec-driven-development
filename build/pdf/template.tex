@@ -1,0 +1,195 @@
+% SDD Book LaTeX Template
+
+\documentclass[$fontsize$,twoside]{book}
+
+% === PAGE GEOMETRY (6x9 trim) ===
+\usepackage[
+  paperwidth=6in,
+  paperheight=9in,
+  inner=0.85in,
+  outer=0.65in,
+  top=0.75in,
+  bottom=0.75in,
+  footskip=0.35in
+]{geometry}
+
+% === FONTS ===
+\usepackage{fontspec}
+\setmainfont{$mainfont$}[Ligatures=TeX]
+\setsansfont{$sansfont$}[Scale=0.95, Ligatures=TeX]
+\setmonofont{$monofont$}[Scale=0.85]
+\newfontfamily\slabfont{$slabfont$}
+
+% === LANGUAGE ===
+\usepackage{polyglossia}
+\setmainlanguage[variant=british]{english}
+
+% === COLOURS ===
+\usepackage{xcolor}
+$if(print)$
+\definecolor{accent}{cmyk}{0.85, 0.50, 0, 0.20}
+\definecolor{linkcolor}{cmyk}{0, 0, 0, 1}
+$else$
+\definecolor{accent}{HTML}{2563EB}
+\definecolor{linkcolor}{HTML}{2563EB}
+$endif$
+\definecolor{codebg}{HTML}{F8F9FA}
+
+% === HYPERLINKS ===
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=linkcolor,
+  urlcolor=linkcolor,
+  citecolor=linkcolor,
+  pdfauthor={$author$},
+  pdftitle={$title$: $subtitle$},
+  bookmarksnumbered=true,
+  bookmarksopen=true
+}
+
+% === HEADERS & FOOTERS ===
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\textit{\leftmark}}
+\fancyhead[RO]{\small\textit{\rightmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% === PART, CHAPTER, SECTION STYLING ===
+\usepackage{titlesec}
+
+\titleformat{\part}[display]
+  {\centering\slabfont\Huge}
+  {\partname\ \thepart}
+  {20pt}
+  {\Huge}
+
+\titleformat{\chapter}[display]
+  {\slabfont\huge}
+  {\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge\slabfont}
+
+\titleformat{\section}
+  {\sffamily\bfseries\Large}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\sffamily\bfseries\large}
+  {\thesubsection}{1em}{}
+
+% === CODE BLOCKS ===
+\usepackage{listings}
+
+% === IMAGES, TABLES, TYPOGRAPHY ===
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% Prevent widows and orphans
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Paragraph spacing (no indent, space between)
+\setlength{\parskip}{0.5\baselineskip plus 2pt minus 1pt}
+\setlength{\parindent}{0pt}
+
+% === PANDOC COMPATIBILITY ===
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}[2]{}{}
+$endif$
+
+% ============================================================
+\begin{document}
+\frontmatter
+
+$if(include-cover)$
+% --- Cover image (screen PDF only) ---
+\thispagestyle{empty}
+\newgeometry{margin=0pt}
+\includegraphics[width=\paperwidth,height=\paperheight]{$cover-image$}
+\restoregeometry
+\cleardoublepage
+$endif$
+
+% --- Half-title ---
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+  {\slabfont\LARGE $title$}
+\end{center}
+\vspace*{\fill}
+\cleardoublepage
+
+% --- Title page ---
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+  {\slabfont\Huge $title$}\\[0.8cm]
+  {\sffamily\Large $subtitle$}\\[2cm]
+  {\large $author$}\\[4cm]
+  {\normalsize First Edition, $date$}
+\end{center}
+\vspace*{\fill}
+\cleardoublepage
+
+% --- Copyright ---
+\thispagestyle{empty}
+\vspace*{\fill}
+{\small
+\noindent\textcopyright\ $date$ $author$
+
+\medskip
+\noindent This work is licensed under Creative Commons
+Attribution-NonCommercial-NoDerivatives 4.0 International
+(CC BY-NC-ND 4.0).
+
+\noindent You are free to share this material with attribution.
+You may not use it commercially or create derivative works.
+
+\medskip
+\noindent\url{https://creativecommons.org/licenses/by-nc-nd/4.0/}
+
+\bigskip
+\noindent\textbf{$title$: $subtitle$}
+
+\noindent First edition, $date$
+
+$if(git-hash)$
+\bigskip
+\noindent{\footnotesize Build \texttt{$git-hash$}$if(build-date)$ · $build-date$$endif$}
+$endif$
+}
+\cleardoublepage
+
+% --- Table of contents ---
+\tableofcontents
+\cleardoublepage
+\markboth{}{}
+
+% --- Body ---
+$body$
+
+\backmatter
+\end{document}

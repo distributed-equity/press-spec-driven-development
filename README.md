@@ -22,9 +22,13 @@ The book is being written using SDD. The specifications in this repo drive the c
 │   └── specs/
 │       ├── editorial/       # What to write (brief, outline, guide, glossary...)
 │       └── workflow/        # How to write it
-├── assets/                  # Cover artwork and bundled fonts
-├── build/epub/              # Pandoc metadata and styles
-├── content/                 # Book content (front matter, chapters)
+├── assets/
+│   ├── cover/               # Cover artwork (SVG sources)
+│   └── fonts/               # Bundled fonts (Source Serif 4, Inter, JetBrains Mono, Alfa Slab One)
+├── build/
+│   ├── epub/                # EPUB metadata and styles
+│   └── pdf/                 # LaTeX template for PDF generation
+├── content/                 # Book content (front matter, parts, chapters)
 ├── infra/                   # Azure Bicep IaC
 ├── scripts/                 # Build, deploy, and setup scripts
 ├── site/                    # Landing page (GitHub Pages)
@@ -54,8 +58,34 @@ Professional developers (3+ years experience) who:
 
 ## Outputs
 
-- **EPUB** — Primary distribution format
-- **Audiobook** — Generated from markdown via ElevenLabs
+The build pipeline produces three book formats from the same markdown source:
+
+| Format | File | Purpose |
+|--------|------|---------|
+| **EPUB** | `spec-driven-development.epub` | E-readers and digital distribution |
+| **Screen PDF** | `spec-driven-development.pdf` | Digital download with cover, RGB colours, clickable links |
+| **Print PDF** | `spec-driven-development-print.pdf` | Print-ready interior (no cover, CMYK-safe, black links) |
+
+All outputs are deployed to Azure Blob Storage on merge to `main`:
+
+```
+https://sddbook.blob.core.windows.net/downloads/spec-driven-development.epub
+https://sddbook.blob.core.windows.net/downloads/spec-driven-development.pdf
+https://sddbook.blob.core.windows.net/downloads/spec-driven-development-print.pdf
+```
+
+Each build embeds the short git hash and build date on the copyright page for traceability.
+
+### PDF Typography
+
+PDFs are typeset with XeLaTeX at 6×9 inch trim size using Google Fonts:
+
+- **Source Serif 4** — Body text (designed for long-form reading)
+- **Alfa Slab One** — Part and chapter titles
+- **Inter** — Section headings
+- **JetBrains Mono** — Code blocks
+
+All fonts are committed to `assets/fonts/` for reproducible builds.
 
 ## Development
 
@@ -76,27 +106,60 @@ structured access to book specifications. See `CLAUDE.md` for usage.
 
 ## Build
 
-Requires [pandoc](https://pandoc.org/installing.html) for EPUB generation.
+### Prerequisites
 
 ```bash
-# Install pandoc (Ubuntu/Debian)
-sudo apt-get install pandoc
-
-# macOS
-brew install pandoc
-
-# Build the EPUB
-python scripts/build-epub.py
+# Install system dependencies (pandoc, texlive, fonts)
+chmod +x scripts/setup-deps.sh
+./scripts/setup-deps.sh
 ```
 
-Output: `output/spec-driven-development.epub` (gitignored)
+### Building locally
+
+```bash
+# Build cover images from SVG sources
+python3 scripts/build-cover.py
+
+# Build EPUB
+python3 scripts/build-epub.py
+
+# Build both PDF variants (screen + print)
+python3 scripts/build-pdf.py
+
+# Build a single variant
+python3 scripts/build-pdf.py --variant screen
+python3 scripts/build-pdf.py --variant print
+
+# Include git hash and build date
+python3 scripts/build-pdf.py \
+  --git-hash "$(git rev-parse --short HEAD)" \
+  --build-date "$(date +%Y-%m-%d)"
+```
+
+Output goes to `output/` (gitignored).
+
+### How the PDF build works
+
+The PDF build assembles all markdown content into a single file with raw LaTeX injections at structural boundaries. The key design decisions:
+
+1. **Title, copyright, and TOC** are handled by the LaTeX template (`build/pdf/template.tex`), not markdown — this gives precise typographic control over the front matter.
+
+2. **Preface** stays in LaTeX `\frontmatter` context (roman page numbers, no chapter numbering).
+
+3. **Part dividers** are detected by filename convention (`00-part-intro.md` in a `*-part-*` directory). The build script extracts the title and injects a `\part{}` command with a `\mainmatter` switch before the first part.
+
+4. **Chapters** are regular markdown files processed as pandoc chapters.
+
+5. **Screen vs print** variants differ in colour profile (RGB vs CMYK), link styling, and whether the cover image is included as page one.
 
 ## CI/CD
 
 | Workflow | Trigger | What it does |
 |----------|---------|--------------|
-| `build-book.yml` | Push/PR to `main` | Builds cover and EPUB, deploys to Azure on merge |
+| `build-book.yml` | Push/PR to `main` | Builds cover, EPUB, and both PDFs. Deploys to Azure Blob Storage on merge. |
 | `deploy-site.yml` | Push to `main` (`site/` changes) | Deploys landing page to GitHub Pages |
+
+The build pipeline captures the git short hash and build date, passing them to all build scripts. These are embedded on the copyright page of every output so any copy can be traced back to the exact commit that produced it.
 
 ## Progress
 

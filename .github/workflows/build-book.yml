@@ -15,6 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Capture build info
+        id: build-info
+        run: |
+          echo "git_hash=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "build_date=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
       - name: Setup dependencies
         run: |
           chmod +x scripts/setup-deps.sh
@@ -24,7 +30,16 @@ jobs:
         run: python3 scripts/build-cover.py
 
       - name: Build EPUB
-        run: python3 scripts/build-epub.py
+        run: |
+          python3 scripts/build-epub.py \
+            --git-hash "${{ steps.build-info.outputs.git_hash }}" \
+            --build-date "${{ steps.build-info.outputs.build_date }}"
+
+      - name: Build PDFs
+        run: |
+          python3 scripts/build-pdf.py \
+            --git-hash "${{ steps.build-info.outputs.git_hash }}" \
+            --build-date "${{ steps.build-info.outputs.build_date }}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -32,6 +47,8 @@ jobs:
           name: sdd-book
           path: |
             output/spec-driven-development.epub
+            output/spec-driven-development.pdf
+            output/spec-driven-development-print.pdf
             output/front-cover.png
             output/spine.png
             output/back-cover.png
@@ -45,10 +62,18 @@ jobs:
       - name: Deploy to Blob Storage
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          az storage blob upload \
-            --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-            --container-name downloads \
-            --name spec-driven-development.epub \
-            --file output/spec-driven-development.epub \
-            --overwrite \
-            --auth-mode login
+          for file in \
+            spec-driven-development.epub \
+            spec-driven-development.pdf \
+            spec-driven-development-print.pdf; do
+            if [ -f "output/$file" ]; then
+              echo "Uploading $file..."
+              az storage blob upload \
+                --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+                --container-name downloads \
+                --name "$file" \
+                --file "output/$file" \
+                --overwrite \
+                --auth-mode login
+            fi
+          done
