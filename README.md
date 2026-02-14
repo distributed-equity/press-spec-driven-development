@@ -16,24 +16,19 @@ The book is being written using SDD. The specifications in this repo drive the c
 
 ```
 .
+├── .github/workflows/       # CI/CD (build book, deploy site)
 ├── .specmcp/
-│   ├── server.py              # MCP server for spec delivery
-│   ├── requirements.txt       # MCP server dependencies
+│   ├── server.py            # MCP server for spec delivery
 │   └── specs/
-│       ├── editorial/         # What to write
-│       │   ├── book-brief.md
-│       │   ├── chapter-outline.md
-│       │   ├── writers-guide.md
-│       │   ├── glossary.md
-│       │   ├── prior-art.md
-│       │   ├── diataxis-integration.md
-│       │   └── continuity-tracker.md
-│       └── workflow/          # How to write it
-│           └── workflow.md
-├── content/                # Generated book content (coming)
-├── build/                  # EPUB and audio configuration (coming)
-├── validation/             # Content validation scripts (coming)
-└── output/                 # Generated artifacts (gitignored)
+│       ├── editorial/       # What to write (brief, outline, guide, glossary...)
+│       └── workflow/        # How to write it
+├── assets/                  # Cover artwork and bundled fonts
+├── build/epub/              # Pandoc metadata and styles
+├── content/                 # Book content (front matter, chapters)
+├── infra/                   # Azure Bicep IaC
+├── scripts/                 # Build, deploy, and setup scripts
+├── site/                    # Landing page (GitHub Pages)
+└── notes/                   # Research links
 ```
 
 ## Specifications
@@ -65,39 +60,48 @@ Professional developers (3+ years experience) who:
 ## Development
 
 ```bash
-# Install Python dependencies
-pip install -r requirements.txt
-
 # Install pre-commit hooks
+pip install pre-commit
 pre-commit install
+
+# Install MCP server dependencies (for spec-driven authoring)
+pip install -r .specmcp/requirements.txt
 
 # Run linting manually
 pre-commit run --all-files
 ```
+
+The `.specmcp/` directory provides a local MCP server that gives Claude
+structured access to book specifications. See `CLAUDE.md` for usage.
 
 ## Build
 
 Requires [pandoc](https://pandoc.org/installing.html) for EPUB generation.
 
 ```bash
+# Install pandoc (Ubuntu/Debian)
+sudo apt-get install pandoc
+
 # macOS
 brew install pandoc
 
-# Ubuntu/Debian (via .deb - apt version is often outdated)
-wget https://github.com/jgm/pandoc/releases/download/3.6.4/pandoc-3.6.4-1-amd64.deb
-sudo dpkg -i pandoc-3.6.4-1-amd64.deb
-
-# Windows
-choco install pandoc
+# Build the EPUB
+python scripts/build-epub.py
 ```
 
-Build the EPUB:
+Output: `output/spec-driven-development.epub` (gitignored)
 
-```bash
-python build.py
-```
+## CI/CD
 
-Output: `output/spec-driven-development.epub`
+| Workflow | Trigger | What it does |
+|----------|---------|--------------|
+| `build-book.yml` | Push/PR to `main` | Builds cover and EPUB, deploys to Azure on merge |
+| `deploy-site.yml` | Push to `main` (`site/` changes) | Deploys landing page to GitHub Pages |
+
+## Progress
+
+- **Front matter** — Title page, copyright, preface
+- **Part 1: Foundation** — Chapter 1: The Fifth Generation
 
 ## License
 
@@ -106,7 +110,7 @@ This repository uses split licensing:
 | Content | License |
 |---------|---------|
 | Book content, specifications, prose (`.specmcp/specs/`, `content/`) | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) |
-| Code, scripts, build tooling (`scripts/`, `validation/`, config files) | [MIT](LICENSE-MIT) |
+| Code, scripts, build tooling (`scripts/`, `build/`, config files) | [MIT](LICENSE-MIT) |
 
 **Book content:** Free to share with attribution. No commercial use or derivatives.
 
