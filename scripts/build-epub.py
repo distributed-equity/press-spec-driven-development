@@ -16,6 +16,7 @@ import argparse
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -91,36 +92,54 @@ def build_epub(git_hash: str | None = None, build_date: str | None = None):
 
     print(f"\nTotal: {len(all_files)} files")
 
-    # Build pandoc command
-    cmd = [
-        "pandoc",
-        "--toc",
-        "--toc-depth=2",
-        "--epub-chapter-level=1",
-        "--epub-title-page=false",
-        "-o",
-        str(output_file),
-    ]
+    # Inject build info into copyright page
+    with tempfile.TemporaryDirectory(prefix="sdd-epub-") as tmp_dir:
+        prepared_files = []
+        for f in all_files:
+            if f.name == "02-copyright.md" and (git_hash or build_date):
+                content = f.read_text(encoding="utf-8").rstrip()
+                build_line = "\n\n---\n\n"
+                parts = []
+                if git_hash:
+                    parts.append(f"Build `{git_hash}`")
+                if build_date:
+                    parts.append(build_date)
+                build_line += " · ".join(parts)
+                content += build_line + "\n"
 
-    if METADATA_FILE.exists():
-        cmd.append(f"--metadata-file={METADATA_FILE}")
-    if COVER_IMAGE.exists():
-        cmd.append(f"--epub-cover-image={COVER_IMAGE}")
-    if CSS_FILE.exists():
-        cmd.append(f"--css={CSS_FILE}")
-    if git_hash:
-        cmd.append(f"--variable=git-hash:{git_hash}")
-    if build_date:
-        cmd.append(f"--variable=build-date:{build_date}")
+                tmp_path = Path(tmp_dir) / f.name
+                tmp_path.write_text(content, encoding="utf-8")
+                prepared_files.append(tmp_path)
+                print(f"\n  Build info: {' · '.join(parts)}")
+            else:
+                prepared_files.append(f)
 
-    cmd.extend(str(f) for f in all_files)
+        # Build pandoc command
+        cmd = [
+            "pandoc",
+            "--toc",
+            "--toc-depth=2",
+            "--epub-chapter-level=1",
+            "--epub-title-page=false",
+            "-o",
+            str(output_file),
+        ]
 
-    print("Running pandoc...")
-    result = subprocess.run(cmd, capture_output=True, text=True)
+        if METADATA_FILE.exists():
+            cmd.append(f"--metadata-file={METADATA_FILE}")
+        if COVER_IMAGE.exists():
+            cmd.append(f"--epub-cover-image={COVER_IMAGE}")
+        if CSS_FILE.exists():
+            cmd.append(f"--css={CSS_FILE}")
 
-    if result.returncode != 0:
-        print(f"ERROR:\n{result.stderr}")
-        sys.exit(1)
+        cmd.extend(str(f) for f in prepared_files)
+
+        print("Running pandoc...")
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        if result.returncode != 0:
+            print(f"ERROR:\n{result.stderr}")
+            sys.exit(1)
 
     size_kb = output_file.stat().st_size / 1024
     print(f"Done: {output_file} ({size_kb:.1f} KB)")
