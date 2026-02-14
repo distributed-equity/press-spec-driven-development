@@ -19,7 +19,7 @@ ignore = [
 ]
 
 [lint.isort]
-known-first-party = ["validation", "scripts"]
+known-first-party = ["validation", "scripts", ".specmcp"]
 
 [format]
 quote-style = "double"

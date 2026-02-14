@@ -16,17 +16,20 @@ The book is being written using SDD. The specifications in this repo drive the c
 
 ```
 .
-├── specs/
-│   ├── editorial/          # What to write
-│   │   ├── book-brief.md
-│   │   ├── chapter-outline.md
-│   │   ├── writers-guide.md
-│   │   ├── glossary.md
-│   │   ├── prior-art.md
-│   │   ├── diataxis-integration.md
-│   │   └── continuity-tracker.md
-│   └── workflow/           # How to write it
-│       └── workflow.md
+├── .specmcp/
+│   ├── server.py              # MCP server for spec delivery
+│   ├── requirements.txt       # MCP server dependencies
+│   └── specs/
+│       ├── editorial/         # What to write
+│       │   ├── book-brief.md
+│       │   ├── chapter-outline.md
+│       │   ├── writers-guide.md
+│       │   ├── glossary.md
+│       │   ├── prior-art.md
+│       │   ├── diataxis-integration.md
+│       │   └── continuity-tracker.md
+│       └── workflow/          # How to write it
+│           └── workflow.md
 ├── content/                # Generated book content (coming)
 ├── build/                  # EPUB and audio configuration (coming)
 ├── validation/             # Content validation scripts (coming)
@@ -102,7 +105,7 @@ This repository uses split licensing:
 
 | Content | License |
 |---------|---------|
-| Book content, specifications, prose (`specs/`, `content/`) | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) |
+| Book content, specifications, prose (`.specmcp/specs/`, `content/`) | [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) |
 | Code, scripts, build tooling (`scripts/`, `validation/`, config files) | [MIT](LICENSE-MIT) |
 
 **Book content:** Free to share with attribution. No commercial use or derivatives.

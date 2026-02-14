@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "sdd-book-specs": {
+      "type": "stdio",
+      "command": "python",
+      "args": [".specmcp/server.py"]
+    }
+  }
+}
