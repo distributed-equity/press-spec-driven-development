@@ -4,6 +4,8 @@ The Spec-Driven Development Book
 
 Research
 
+https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html
+
 https://www.infoq.com/articles/spec-driven-development/
 
 https://www.thoughtworks.com/insights/blog/agile-engineering-practices/spec-driven-development-unpacking-2025-new-engineering-practices
