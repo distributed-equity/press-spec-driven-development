@@ -19,7 +19,10 @@
   <!-- Author: Inter Regular -->
   <text x="140" y="950" font-family="'Inter', sans-serif" font-weight="400" font-size="48" fill="#555555">Kevin Ryan</text>
 
-  <!-- Tagline: Inter Regular, left-aligned -->
+  <!-- Build metadata: Inter, red, slightly higher -->
+  <text x="140" y="1002" font-family="'Inter', sans-serif" font-weight="400" font-size="24" fill="#e63926">{{BUILD_REF}}</text>
+
+  <!-- Tagline: bottom area -->
   <text x="140" y="1360" font-family="'Inter', sans-serif" font-weight="400" font-size="30" fill="#444444">Move beyond ad-hoc prompting to structured workflows</text>
   <text x="140" y="1400" font-family="'Inter', sans-serif" font-weight="400" font-size="30" fill="#444444">where the spec is the source of truth and code follows.</text>
 </svg>

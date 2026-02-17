@@ -1,10 +1,9 @@
-name: Build & Deploy Book
+name: Build Book
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 jobs:
@@ -12,68 +11,100 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Capture build info
-        id: build-info
-        run: |
-          echo "git_hash=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
-          echo "build_date=$(date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      # --- Dependencies ---
 
-      - name: Setup dependencies
+      - name: Install system dependencies
         run: |
-          chmod +x scripts/setup-deps.sh
-          ./scripts/setup-deps.sh
+          sudo apt-get update
+          sudo apt-get install -y \
+            librsvg2-bin \
+            pandoc \
+            texlive-xetex \
+            texlive-latex-extra \
+            texlive-fonts-extra
+
+      - name: Install Google Fonts
+        run: |
+          mkdir -p ~/.local/share/fonts
+
+          # Alfa Slab One
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/alfaslabone/AlfaSlabOne-Regular.ttf" \
+            -o ~/.local/share/fonts/AlfaSlabOne-Regular.ttf
+
+          # Inter (variable)
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf" \
+            -o ~/.local/share/fonts/Inter.ttf
+
+          # Source Serif 4 (variable)
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/sourceserif4/SourceSerif4%5Bopsz%2Cwght%5D.ttf" \
+            -o ~/.local/share/fonts/SourceSerif4.ttf
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/sourceserif4/SourceSerif4-Italic%5Bopsz%2Cwght%5D.ttf" \
+            -o ~/.local/share/fonts/SourceSerif4-Italic.ttf
+
+          # IBM Plex Mono
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/ibmplexmono/IBMPlexMono-Light.ttf" \
+            -o ~/.local/share/fonts/IBMPlexMono-Light.ttf
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf" \
+            -o ~/.local/share/fonts/IBMPlexMono-Regular.ttf
+
+          # JetBrains Mono (used in PDF code blocks)
+          curl -sL "https://github.com/google/fonts/raw/main/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf" \
+            -o ~/.local/share/fonts/JetBrainsMono.ttf
+
+          fc-cache -fv
+
+      # --- Build metadata ---
+
+      - name: Determine build reference
+        id: meta
+        run: |
+          BUILD_DATE=$(date +'%Y.%m.%d')
+
+          # Check if current commit has a version tag
+          TAG=$(git describe --exact-match --tags 2>/dev/null || echo "")
+
+          if [ -n "$TAG" ]; then
+            GIT_REF="$TAG"
+          else
+            GIT_REF=$(git rev-parse --short HEAD)
+          fi
+
+          echo "git_ref=${GIT_REF}" >> "$GITHUB_OUTPUT"
+          echo "build_date=${BUILD_DATE}" >> "$GITHUB_OUTPUT"
+          echo "Build: ${GIT_REF} · ${BUILD_DATE}"
+
+      # --- Build steps ---
 
       - name: Build cover images
-        run: python3 scripts/build-cover.py
+        run: |
+          python scripts/build-cover.py \
+            --git-hash "${{ steps.meta.outputs.git_ref }}" \
+            --build-date "${{ steps.meta.outputs.build_date }}"
+
+      - name: Build PDF
+        run: |
+          python scripts/build-pdf.py \
+            --git-hash "${{ steps.meta.outputs.git_ref }}" \
+            --build-date "${{ steps.meta.outputs.build_date }}"
 
       - name: Build EPUB
         run: |
-          python3 scripts/build-epub.py \
-            --git-hash "${{ steps.build-info.outputs.git_hash }}" \
-            --build-date "${{ steps.build-info.outputs.build_date }}"
+          python scripts/build-epub.py \
+            --git-hash "${{ steps.meta.outputs.git_ref }}" \
+            --build-date "${{ steps.meta.outputs.build_date }}"
 
-      - name: Build PDFs
-        run: |
-          python3 scripts/build-pdf.py \
-            --git-hash "${{ steps.build-info.outputs.git_hash }}" \
-            --build-date "${{ steps.build-info.outputs.build_date }}"
+      # --- Artifacts ---
 
-      - name: Upload artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: sdd-book
+          name: sdd-book-${{ steps.meta.outputs.git_ref }}
           path: |
-            output/spec-driven-development.epub
             output/spec-driven-development.pdf
             output/spec-driven-development-print.pdf
+            output/spec-driven-development.epub
             output/front-cover.png
-            output/spine.png
-            output/back-cover.png
-
-      - name: Azure Login
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy to Blob Storage
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          for file in \
-            spec-driven-development.epub \
-            spec-driven-development.pdf \
-            spec-driven-development-print.pdf; do
-            if [ -f "output/$file" ]; then
-              echo "Uploading $file..."
-              az storage blob upload \
-                --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-                --container-name downloads \
-                --name "$file" \
-                --file "output/$file" \
-                --overwrite \
-                --auth-mode login
-            fi
-          done
