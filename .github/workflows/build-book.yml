@@ -24,8 +24,7 @@ jobs:
             librsvg2-bin \
             pandoc \
             texlive-xetex \
-            texlive-latex-extra \
-            texlive-fonts-extra
+            texlive-latex-extra
 
       - name: Install fonts from repo
         run: |
