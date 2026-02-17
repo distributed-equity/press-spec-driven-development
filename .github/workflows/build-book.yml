@@ -27,34 +27,10 @@ jobs:
             texlive-latex-extra \
             texlive-fonts-extra
 
-      - name: Install Google Fonts
+      - name: Install fonts from repo
         run: |
           mkdir -p ~/.local/share/fonts
-
-          # Alfa Slab One
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/alfaslabone/AlfaSlabOne-Regular.ttf" \
-            -o ~/.local/share/fonts/AlfaSlabOne-Regular.ttf
-
-          # Inter (variable)
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf" \
-            -o ~/.local/share/fonts/Inter.ttf
-
-          # Source Serif 4 (variable)
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/sourceserif4/SourceSerif4%5Bopsz%2Cwght%5D.ttf" \
-            -o ~/.local/share/fonts/SourceSerif4.ttf
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/sourceserif4/SourceSerif4-Italic%5Bopsz%2Cwght%5D.ttf" \
-            -o ~/.local/share/fonts/SourceSerif4-Italic.ttf
-
-          # IBM Plex Mono
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/ibmplexmono/IBMPlexMono-Light.ttf" \
-            -o ~/.local/share/fonts/IBMPlexMono-Light.ttf
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/ibmplexmono/IBMPlexMono-Regular.ttf" \
-            -o ~/.local/share/fonts/IBMPlexMono-Regular.ttf
-
-          # JetBrains Mono (used in PDF code blocks)
-          curl -sL "https://github.com/google/fonts/raw/main/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf" \
-            -o ~/.local/share/fonts/JetBrainsMono.ttf
-
+          cp assets/fonts/*.ttf ~/.local/share/fonts/
           fc-cache -fv
 
       # --- Build metadata ---
