@@ -422,18 +422,26 @@
         </div>
       </div>
 
-      <p>The publication pipeline is fully automated. Every push to main triggers a build. The cover carries a build reference — a git commit hash or version tag — injected into the SVG at build time. Pick up any copy and you know exactly what state of the repository produced it.</p>
+      <p>The publication pipeline is fully automated and deterministic. Every push to main triggers a build that renders the cover, compiles the PDF and EPUB, and deploys to Azure Blob Storage — with no manual intervention between commit and publication.</p>
+      <p>The cover carries a build reference — a git commit hash or version tag — injected into the SVG at build time. The same reference appears on the copyright page of every format. Pick up any copy and you know exactly what state of the repository produced it. That's not decoration. It's traceability — the same principle the book advocates for production software.</p>
+      <p>Non-deterministic generation, deterministic validation, automated deployment. The book's methodology applied to its own creation.</p>
 
       <div class="pipeline">
-        <div class="step"><span class="step-num">01</span><span class="step-text">Push to main</span></div>
+        <div class="step"><span class="step-num">01</span><span class="step-text">MCP servers load spec, skills, and brand context</span></div>
         <div class="arrow">↓</div>
-        <div class="step"><span class="step-num">02</span><span class="step-text">Determine build ref (tag or SHA)</span></div>
+        <div class="step"><span class="step-num">02</span><span class="step-text">Content authored against specification constraints</span></div>
         <div class="arrow">↓</div>
-        <div class="step"><span class="step-num">03</span><span class="step-text">Inject metadata into cover SVG + copyright page</span></div>
+        <div class="step"><span class="step-num">03</span><span class="step-text">Output validated against spec, brand, and editorial rules</span></div>
         <div class="arrow">↓</div>
-        <div class="step"><span class="step-num">04</span><span class="step-text">Render cover → build EPUB → build PDF</span></div>
+        <div class="step"><span class="step-num">04</span><span class="step-text">Merge to main triggers build pipeline</span></div>
         <div class="arrow">↓</div>
-        <div class="step"><span class="step-num">05</span><span class="step-text">Deploy to Azure Blob Storage</span></div>
+        <div class="step"><span class="step-num">05</span><span class="step-text">Build ref determined (version tag or commit SHA)</span></div>
+        <div class="arrow">↓</div>
+        <div class="step"><span class="step-num">06</span><span class="step-text">Build ref injected into cover &amp; copyright content</span></div>
+        <div class="arrow">↓</div>
+        <div class="step"><span class="step-num">07</span><span class="step-text">Artifacts rendered and validated against spec</span></div>
+        <div class="arrow">↓</div>
+        <div class="step"><span class="step-num">08</span><span class="step-text">Deploy to Azure Blob Storage</span></div>
       </div>
 
       <div class="build-note">
