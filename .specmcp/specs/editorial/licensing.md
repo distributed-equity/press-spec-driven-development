@@ -119,3 +119,7 @@ in order:
   <https://distributedequity.org/license> should be added at the repo root.
 - DEL inline tags in source files are out of scope for this spec. They may be
   addressed in a future spec if granular per-file tagging is needed.
+- The PDF build renders the copyright page from `build/pdf/template.tex`, not
+  the markdown source. When translating the summary into LaTeX, do not use
+  `$...$` math mode — pandoc reserves `$` for template variables. Use
+  `\(\leq\)` for the ≤ symbol and `\%` for literal percent signs.
