@@ -5,6 +5,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 FONT_DIR="$REPO_ROOT/assets/fonts"
 
+# Short-circuit if dependencies are already installed (cache hit)
+if command -v xelatex > /dev/null && command -v pandoc > /dev/null && command -v rsvg-convert > /dev/null && fc-list | grep -qi "source serif"; then
+  echo "==> Dependencies already installed (cache hit), skipping."
+  exit 0
+fi
+
 echo "==> Installing system dependencies..."
 sudo apt-get update -qq || echo "    Warning: apt-get update had errors, continuing..."
 sudo apt-get install -y -qq \

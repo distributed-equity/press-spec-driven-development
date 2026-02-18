@@ -34,6 +34,15 @@ jobs:
           echo "build_date=${BUILD_DATE}" >> "$GITHUB_OUTPUT"
           echo "Build: ${GIT_REF} · ${BUILD_DATE}"
 
+      - name: Cache TeX Live and dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/texlive
+            /usr/share/fonts
+            ~/.fonts
+          key: texlive-${{ hashFiles('scripts/setup-deps.sh') }}
+
       - name: Setup dependencies
         run: |
           chmod +x scripts/setup-deps.sh
