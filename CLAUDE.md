@@ -36,10 +36,13 @@ When writing a chapter:
 When executing any spec:
 
 1. Call `get_spec("provenance")` to load the conventions
-2. Create a branch named `spec/<spec-name>/<action>`
-3. Call `get_spec("<spec-name>")` and execute the work
-4. Append a provenance entry to `<spec-name>.provenance.md`
-5. Commit everything together and open a PR against `main`
+2. Call `get_spec("<spec-name>")` and review it in plan mode first
+3. Validate that all file paths, references, and assumptions in the spec
+   match the current state of the repository — specs have bugs too
+4. Create a branch named `spec/<spec-name>/<action>`
+5. Execute the work
+6. Append a provenance entry to `<spec-name>.provenance.md`
+7. Commit everything together and open a PR against `main`
 
 ## Code Quality
 
