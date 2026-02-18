@@ -20,6 +20,7 @@ Start with `list_specs` to see all available specs. The most important are:
 - **writers-guide** — Voice, tone, style rules (read this before writing any content)
 - **glossary** — Canonical term definitions (use terms exactly as defined)
 - **chapter-outline** — 26 chapters across 5 parts
+- **provenance** — Branch naming and execution audit trail (read before any spec execution)
 
 ## Writing Workflow
 
@@ -29,6 +30,16 @@ When writing a chapter:
 2. Follow the writers guide strictly
 3. Use glossary terms exactly as defined
 4. After writing, call `validate_content` to check for issues
+
+## Spec Execution Workflow
+
+When executing any spec:
+
+1. Call `get_spec("provenance")` to load the conventions
+2. Create a branch named `spec/<spec-name>/<action>`
+3. Call `get_spec("<spec-name>")` and execute the work
+4. Append a provenance entry to `<spec-name>.provenance.md`
+5. Commit everything together and open a PR against `main`
 
 ## Code Quality
 
