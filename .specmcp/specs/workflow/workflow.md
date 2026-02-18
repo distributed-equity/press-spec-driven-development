@@ -70,11 +70,12 @@ sdd-book/
 │   │   ├── 02-copyright.md             # Copyright, edition, ISBN
 │   │   ├── 03-dedication.md            # Optional
 │   │   ├── 04-epigraph.md              # Optional opening quote
-│   │   ├── 05-toc.md                   # Table of contents (auto-generated)
-│   │   ├── 06-foreword.md              # Optional (by someone else)
-│   │   ├── 07-preface.md               # Author's context, why this book
-│   │   ├── 08-acknowledgments.md       # Optional (can also be back matter)
-│   │   └── 09-introduction.md          # Setup for the reader
+│   │   ├── 05-authors-note.md          # Beta status, call for participation
+│   │   ├── 06-toc.md                   # Table of contents (auto-generated)
+│   │   ├── 07-foreword.md              # Optional (by someone else)
+│   │   ├── 08-preface.md               # Author's context, why this book
+│   │   ├── 09-acknowledgments.md       # Optional (can also be back matter)
+│   │   └── 10-introduction.md          # Setup for the reader
 │   │
 │   ├── 01-part-1-foundation/           # Part 1: Foundation
 │   │   ├── 00-part-intro.md            # Part 1 intro (optional)
@@ -157,7 +158,7 @@ sdd-book/
 │   ├── sdd-book.pdf
 │   └── audio/
 │       ├── 00-00-cover.mp3
-│       ├── 00-07-preface.mp3
+│       ├── 00-08-preface.mp3
 │       ├── 01-01-the-fifth-generation.mp3
 │       └── ...
 │
@@ -201,34 +202,35 @@ The book assembles in this sequence:
 | 3 | copyright.md | Yes | © notice, edition, ISBN, rights |
 | 4 | dedication.md | No | Short dedication |
 | 5 | epigraph.md | No | Opening quote |
-| 6 | toc.md | Yes | Auto-generated from chapters |
-| 7 | foreword.md | No | Written by someone else |
-| 8 | preface.md | Yes | Author's "why I wrote this" |
-| 9 | acknowledgments.md | No | Can be front or back matter |
-| 10 | introduction.md | Yes | Reader setup, how to use book |
+| 6 | authors-note.md | No | Beta status, call for participation |
+| 7 | toc.md | Yes | Auto-generated from chapters |
+| 8 | foreword.md | No | Written by someone else |
+| 9 | preface.md | Yes | Author's "why I wrote this" |
+| 10 | acknowledgments.md | No | Can be front or back matter |
+| 11 | introduction.md | Yes | Reader setup, how to use book |
 
 ### Body
 
 | Order | Section | Chapters |
 |-------|---------|----------|
-| 11 | Part 1: Foundation | Ch 1–5 |
-| 12 | Part 2: Writing Specifications | Ch 6–11 |
-| 13 | Part 3: The Workflow | Ch 12–17 |
-| 14 | Part 4: Practice | Ch 18–22 |
-| 15 | Part 5: Governance and Evolution | Ch 23–25 |
-| 16 | Closing | Ch 26 |
+| 12 | Part 1: Foundation | Ch 1–5 |
+| 13 | Part 2: Writing Specifications | Ch 6–11 |
+| 14 | Part 3: The Workflow | Ch 12–17 |
+| 15 | Part 4: Practice | Ch 18–22 |
+| 16 | Part 5: Governance and Evolution | Ch 23–25 |
+| 17 | Closing | Ch 26 |
 
 ### Back Matter
 
 | Order | File | Required | Notes |
 |-------|------|----------|-------|
-| 17 | appendix-a-specification-templates.md | Yes | Practical templates |
-| 18 | appendix-b-glossary.md | Yes | Generated from glossary.md |
-| 19 | appendix-c-quick-reference.md | Yes | Cheat sheet |
-| 20 | bibliography.md | Yes | References, further reading |
-| 21 | index.md | No | Auto-generated or manual |
-| 22 | about-author.md | Yes | Author bio |
-| 23 | colophon.md | No | How the book was made |
+| 18 | appendix-a-specification-templates.md | Yes | Practical templates |
+| 19 | appendix-b-glossary.md | Yes | Generated from glossary.md |
+| 20 | appendix-c-quick-reference.md | Yes | Cheat sheet |
+| 21 | bibliography.md | Yes | References, further reading |
+| 22 | index.md | No | Auto-generated or manual |
+| 23 | about-author.md | Yes | Author bio |
+| 24 | colophon.md | No | How the book was made |
 
 ---
 
@@ -238,7 +240,7 @@ The book assembles in this sequence:
 [section]-[order]-[slug].md
 
 Examples:
-00-07-preface.md          # Front matter, 7th item, preface
+00-08-preface.md          # Front matter, 8th item, preface
 01-03-the-core-insight.md # Part 1, chapter 3, slug
 07-04-bibliography.md     # Back matter, 4th item, bibliography
 ```
