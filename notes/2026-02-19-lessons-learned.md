@@ -166,6 +166,18 @@ human confirms the aesthetics. When visual tweaks are needed, they go
 back into the spec (update the LaTeX values, re-execute), not into the
 files. The spec stays the source of truth even for intuitive judgements.
 
+**Not everything is a spec.**
+The preface is the author talking directly to the reader. There's
+nothing to discover, nothing to generate from data, nothing an agent
+needs to figure out. It's pure editorial judgement — the one thing SDD
+explicitly doesn't automate. Just write it, commit it, move on. No
+spec, no skill, no provenance. The build pipeline picks it up
+automatically. If you start writing specs for things that are entirely
+human creative output, you've crossed from methodology into cargo cult.
+The question is always: "Is there work here that benefits from
+specification?" If the human is the entire loop — intent, creation,
+and validation — a spec adds ceremony, not value.
+
 **The unbroken chain is the proof.**
 Visitor hits the repo. The generated README tells them it's spec-driven.
 One click to sddbook.com. One click to download the PDF. That PDF was
@@ -491,6 +503,9 @@ holes."
 bugs that would cost you a whole re-execution to fix."
 
 "The spec defines the structure. The human confirms the aesthetics."
+
+"Not everything is a spec. If the human is the entire loop, a spec
+adds ceremony, not value. Don't cargo-cult the methodology."
 
 "The repo is the proof. The book is the case study. The README is the
 demo. The commit hash is the receipt."
