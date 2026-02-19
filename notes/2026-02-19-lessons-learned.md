@@ -154,6 +154,18 @@ deviations are. If you know you're going off-spec, say so. The
 provenance file is the place to be honest. Future readers (including
 yourself) will thank you.
 
+**Some verification needs eyes, not checks.**
+The epigraph spec had a thorough verification checklist — file exists,
+LaTeX environment defined, CSS rules present, no gold-plating. Every
+check passed. But none of them could tell you whether the epigraph
+actually looks right on a 6×9 inch page. Is the vertical centering
+balanced? Is `\large` the right size for the quote? Does 70% text width
+feel right? That's not a spec deficiency — it's a category of
+validation that can't be automated. The spec defines the structure; the
+human confirms the aesthetics. When visual tweaks are needed, they go
+back into the spec (update the LaTeX values, re-execute), not into the
+files. The spec stays the source of truth even for intuitive judgements.
+
 **The unbroken chain is the proof.**
 Visitor hits the repo. The generated README tells them it's spec-driven.
 One click to sddbook.com. One click to download the PDF. That PDF was
@@ -477,6 +489,8 @@ holes."
 
 "The step 6 decision gate isn't ceremony — it's where you catch the
 bugs that would cost you a whole re-execution to fix."
+
+"The spec defines the structure. The human confirms the aesthetics."
 
 "The repo is the proof. The book is the case study. The README is the
 demo. The commit hash is the receipt."
