@@ -176,7 +176,12 @@ automatically. If you start writing specs for things that are entirely
 human creative output, you've crossed from methodology into cargo cult.
 The question is always: "Is there work here that benefits from
 specification?" If the human is the entire loop — intent, creation,
-and validation — a spec adds ceremony, not value.
+and validation — a spec adds ceremony, not value. This applies at the
+project level too. Your entire solution doesn't need to be SDD. Maybe
+it's the build pipeline, the infrastructure, the data contracts — the
+slice that benefits from specification rigour. Apply SDD to that slice.
+Ship the rest normally. The value is in knowing which part benefits,
+not in making everything a spec.
 
 **The unbroken chain is the proof.**
 Visitor hits the repo. The generated README tells them it's spec-driven.
