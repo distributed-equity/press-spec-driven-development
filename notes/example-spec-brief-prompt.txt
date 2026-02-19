@@ -1,0 +1,28 @@
+git pull origin main && Load get_skill("author-spec") and use it to
+expand the following brief into a full spec. Save the spec to
+.specmcp/specs/devops/readme-update.md
+
+Brief:
+- README.md is a generated artifact, re-executable from this spec
+  whenever the repo state changes
+- Each execution overwrites README.md and creates a new provenance record
+- README should carry a generation notice (spec name, "do not hand-edit,
+  update the spec instead")
+- Agent must discover current repo state at execution time, not rely on
+  hardcoded lists
+- Use MCP tools (list_specs, list_skills, list_brand), cat .mcp.json,
+  and directory scanning to populate content
+- Document the SDD workflow (two loops, eight steps) as a prominent
+  section
+- Document all MCP servers and their tools (discovered from .mcp.json
+  and servers)
+- Document all skills (discovered from list_skills)
+- Document the provenance system
+- Update repository structure tree from actual directory state
+- Strengthen the dogfooding angle — this repo proves the methodology
+- Replace static Progress section with something that doesn't rot (or
+  remove)
+- Keep sections that are structurally stable (thesis, audience, outputs,
+  build, CI/CD, license)
+- British English throughout
+- Reference AGENTS.md not CLAUDE.md for agent workflow
