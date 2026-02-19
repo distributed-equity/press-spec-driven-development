@@ -15,6 +15,7 @@ fi
 echo "==> Installing system dependencies..."
 sudo apt-get update -qq || echo "    Warning: apt-get update had errors, continuing..."
 sudo apt-get install -y -qq \
+  git-lfs \
   librsvg2-bin \
   pandoc \
   texlive-xetex \
