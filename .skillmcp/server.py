@@ -58,6 +58,8 @@ def discover_skills(category: str | None = None) -> list[SkillInfo]:
     """Scan skills/ and return metadata for every .md file found."""
     skills: list[SkillInfo] = []
     for md_file in sorted(SKILLS_DIR.rglob("*.md")):
+        if md_file.stem.endswith(".provenance"):
+            continue  # Skip provenance files — accessed via dedicated tools
         cat = md_file.parent.name
         if category and cat != category:
             continue
@@ -76,6 +78,8 @@ def discover_skills(category: str | None = None) -> list[SkillInfo]:
 def load_skill(name: str) -> str:
     """Load a skill by name. Raises ValueError if not found."""
     for md_file in SKILLS_DIR.rglob("*.md"):
+        if md_file.stem.endswith(".provenance"):
+            continue
         if md_file.stem == name:
             return md_file.read_text(encoding="utf-8")
     available = [s.name for s in discover_skills()]
