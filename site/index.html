@@ -291,6 +291,100 @@
       line-height: 1.6;
     }
 
+    /* === INSTALL SKILL === */
+    .terminal {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .terminal-bar {
+      background: #161b22;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid #30363d;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #30363d;
+    }
+
+    .terminal-dot.red { background: #f85149; }
+    .terminal-dot.yellow { background: #d29922; }
+    .terminal-dot.green { background: #3fb950; }
+
+    .terminal-bar span {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: #484f58;
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2;
+      color: #c9d1d9;
+      overflow-x: auto;
+    }
+
+    .terminal-body .prompt {
+      color: #3fb950;
+      user-select: none;
+    }
+
+    .terminal-body .cmd {
+      color: #c9d1d9;
+    }
+
+    .terminal-body .comment {
+      color: #484f58;
+    }
+
+    .terminal-body .output {
+      color: #8b949e;
+    }
+
+    .terminal-body .highlight {
+      color: #58a6ff;
+    }
+
+    .install-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--black);
+      color: #fff;
+      font-family: var(--sans);
+      font-weight: 900;
+      font-size: 1rem;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      letter-spacing: 0.02em;
+      transition: background 0.2s ease, transform 0.2s ease;
+      margin-top: 0.5rem;
+    }
+
+    .install-cta:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    .install-cta img {
+      height: 18px;
+      width: auto;
+      flex-shrink: 0;
+    }
+
     /* === ABOUT === */
     .credentials {
       font-family: var(--mono);
@@ -448,6 +542,44 @@
       <div class="build-note">
         The specification is the artifact. The book is a side effect. Form follows function.
       </div>
+    </div>
+  </section>
+
+  <!-- INSTALL THE SKILL -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="red-rule"></div>
+      <h2>Install the methodology</h2>
+      <p>The book teaches the methodology. The skill makes your agent follow it. Install it and your AI coding agent starts working with specifications, decision gates, and provenance — the same workflow described in every chapter.</p>
+      <p>Published on the <a href="https://tessl.io/registry/kevin-ryan-io/spec-driven-development" style="color: var(--red); text-decoration: none;">Tessl Registry</a> as a versioned, evaluated skill. One command to install. No configuration. Works with Claude Code, Cursor, Windsurf, and any MCP-compatible agent.</p>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dot red"></div>
+          <div class="terminal-dot yellow"></div>
+          <div class="terminal-dot green"></div>
+          <span>terminal</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="comment"># initialise tessl in your project</span></div>
+          <div><span class="prompt">$ </span><span class="cmd">tessl init</span></div>
+          <div>&nbsp;</div>
+          <div><span class="comment"># install the skill</span></div>
+          <div><span class="prompt">$ </span><span class="cmd">tessl install kevin-ryan-io/spec-driven-development</span></div>
+          <div>&nbsp;</div>
+          <div><span class="comment"># your agent now follows SDD</span></div>
+          <div><span class="prompt">$ </span><span class="cmd">claude</span></div>
+          <div><span class="output">› Build a REST API for user subscriptions.</span></div>
+          <div><span class="output">&nbsp; Use spec-driven development.</span></div>
+        </div>
+      </div>
+
+      <p>The skill includes the complete two-loop workflow, the step 6 decision gate, spec format requirements, the four types of context, provenance tracking, and a reference library of practitioner-discovered principles and anti-patterns. Everything in the book, distilled into structured context your agent can act on.</p>
+
+      <a href="https://tessl.io/registry/kevin-ryan-io/spec-driven-development" class="install-cta">
+        <img src="tessl-logo.png" alt="Tessl">
+        View on Tessl Registry
+      </a>
     </div>
   </section>
 
